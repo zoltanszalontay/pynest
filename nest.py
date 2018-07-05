@@ -109,7 +109,8 @@ class Nest:
         allvars.update(device)
 
         for k in sorted(allvars.keys()):
-            print(k + " "*(35-len(k)) + ":", allvars[k])
+            if(k == "target_temperature"):
+                print(k + " "*(35-len(k)) + ":", allvars[k])
 
     def show_curtemp(self):
         temp = self.status["shared"][self.serial]["current_temperature"]
@@ -128,8 +129,7 @@ class Nest:
                                "Authorization":"Basic " + self.access_token,
                                "X-nl-protocol-version": "1"})
 
-        res = urllib.request.urlopen(req).read()
-
+        res = urllib.request.urlopen(req).read().decode('utf-8')
         print(res)
 
     def set_fan(self, state):
@@ -234,8 +234,3 @@ def main():
 
 if __name__=="__main__":
    main()
-
-
-
-
-
